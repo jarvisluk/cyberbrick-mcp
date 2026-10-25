@@ -4,8 +4,9 @@
 //
 //   node scripts/check_release.mjs [vX.Y.Z] [--notes <file>]
 //
-// The tag defaults to GITHUB_REF_NAME (set by Actions on tag pushes); without
-// one, only the files are compared with each other. --notes writes that
+// The tag defaults to GITHUB_REF_NAME on tag pushes in Actions (on branch
+// pushes it is the branch name, so it is ignored); without one, only the
+// files are compared with each other. --notes writes that
 // version's CHANGELOG section to <file> for the GitHub Release body.
 import { readFileSync, writeFileSync } from 'node:fs';
 
@@ -16,7 +17,7 @@ const json = (p) => JSON.parse(read(p));
 const args = process.argv.slice(2);
 const notesIdx = args.indexOf('--notes');
 const notesFile = notesIdx >= 0 ? args.splice(notesIdx, 2)[1] : null;
-const tag = args[0] || process.env.GITHUB_REF_NAME || null;
+const tag = args[0] || (process.env.GITHUB_REF_TYPE === 'tag' ? process.env.GITHUB_REF_NAME : null) || null;
 
 const pkg = json('package.json');
 const lock = json('package-lock.json');
