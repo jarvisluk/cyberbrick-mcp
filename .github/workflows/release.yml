@@ -100,7 +100,9 @@ jobs:
         run: |
           name="$(node -p "require('./server.json').name")"
           # Registry search is a substring match; look for this exact name and version.
-          if curl -fsSL "https://registry.modelcontextprotocol.io/v0/servers?search=${name}" \
+          # The "/" in the name must be URL-encoded or the search matches nothing.
+          query="$(node -p 'encodeURIComponent(process.argv[1])' "$name")"
+          if curl -fsSL "https://registry.modelcontextprotocol.io/v0/servers?search=${query}" \
               | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const [n,v]=process.argv.slice(1);const list=JSON.parse(s).servers||[];process.exit(list.some(e=>(e.server||e).name===n&&(e.server||e).version===v)?0:1)})' "$name" "$VERSION"; then
             echo "$name $VERSION is already in the MCP Registry, skipping"
             exit 0
