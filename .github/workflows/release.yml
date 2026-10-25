@@ -1,0 +1,137 @@
+name: Release
+
+# Push a vX.Y.Z tag on a commit where package.json, package-lock.json,
+# server.json, src/server.js and CHANGELOG.md all carry X.Y.Z.
+# Order: verify -> npm -> MCP Registry -> GitHub Release. Each publish step
+# skips itself when that version is already out, so a failed run can be re-run.
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+      prerelease: ${{ steps.meta.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Tag, versions and CHANGELOG agree
+        run: node scripts/check_release.mjs "$GITHUB_REF_NAME" --notes release-notes.md
+      - run: npm test
+      - name: Server starts and registers its tools
+        run: node scripts/mcp_list.mjs
+      - run: npm pack --dry-run
+      - id: meta
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if [[ "$version" == *-* ]]; then echo "prerelease=true"; else echo "prerelease=false"; fi >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-notes
+          path: release-notes.md
+
+  npm:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write # npm trusted publishing + provenance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      # Trusted publishing (OIDC) needs npm >= 11.5.1.
+      - run: npm install -g npm@^11.5.1
+      - run: npm ci
+      - name: Publish
+        env:
+          VERSION: ${{ needs.verify.outputs.version }}
+          PRERELEASE: ${{ needs.verify.outputs.prerelease }}
+          # Optional: only used until trusted publishing is set up on npmjs.com.
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          name="$(node -p "require('./package.json').name")"
+          if npm view "$name@$VERSION" version >/dev/null 2>&1; then
+            echo "$name@$VERSION is already on npm, skipping"
+            exit 0
+          fi
+          dist_tag=latest
+          [[ "$PRERELEASE" == true ]] && dist_tag=next
+          npm publish --provenance --access public --tag "$dist_tag"
+
+  mcp-registry:
+    needs: [verify, npm]
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write # mcp-publisher login github-oidc
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install mcp-publisher
+        run: |
+          os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+          arch="$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')"
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_${os}_${arch}.tar.gz" \
+            | tar xz mcp-publisher
+          ./mcp-publisher --help >/dev/null
+      - run: ./mcp-publisher login github-oidc
+      - name: Publish server.json
+        env:
+          VERSION: ${{ needs.verify.outputs.version }}
+        run: |
+          name="$(node -p "require('./server.json').name")"
+          # Registry search is a substring match; look for this exact name and version.
+          if curl -fsSL "https://registry.modelcontextprotocol.io/v0/servers?search=${name}" \
+              | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const [n,v]=process.argv.slice(1);const list=JSON.parse(s).servers||[];process.exit(list.some(e=>(e.server||e).name===n&&(e.server||e).version===v)?0:1)})' "$name" "$VERSION"; then
+            echo "$name $VERSION is already in the MCP Registry, skipping"
+            exit 0
+          fi
+          # The registry checks the npm package's mcpName, so retry while npm propagates.
+          for attempt in 1 2 3 4 5; do
+            ./mcp-publisher publish && exit 0
+            echo "publish attempt $attempt failed, retrying in 30s"
+            sleep 30
+          done
+          exit 1
+
+  github-release:
+    needs: [verify, mcp-registry]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-notes
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRERELEASE: ${{ needs.verify.outputs.prerelease }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $GITHUB_REF_NAME already exists, skipping"
+            exit 0
+          fi
+          flags=()
+          [[ "$PRERELEASE" == true ]] && flags+=(--prerelease)
+          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+            --title "$GITHUB_REF_NAME" --notes-file release-notes.md --verify-tag "${flags[@]}"

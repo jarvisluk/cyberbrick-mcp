@@ -1,0 +1,38 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.jarvisluk/cyberbrick-mcp",
+  "title": "CyberBrick",
+  "description": "Drive the Bambu Lab CyberBrick desktop app: connect devices, edit firmware config, flash.",
+  "version": "0.4.0",
+  "repository": {
+    "url": "https://github.com/jarvisluk/cyberbrick-mcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "cyberbrick-mcp",
+      "version": "0.4.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "CB_CDP_HOST",
+          "description": "Host of the CyberBrick app's CDP endpoint (default 127.0.0.1)",
+          "isRequired": false
+        },
+        {
+          "name": "CB_CDP_PORT",
+          "description": "Port of the CyberBrick app's CDP endpoint (default 9223)",
+          "isRequired": false
+        },
+        {
+          "name": "CB_APP_BINARY",
+          "description": "CyberBrick executable that cb_launch starts (default /Applications/CyberBrick.app/Contents/MacOS/CyberBrick)",
+          "isRequired": false
+        }
+      ]
+    }
+  ]
+}

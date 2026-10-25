@@ -1,0 +1,51 @@
+{
+  "name": "cyberbrick-mcp",
+  "version": "0.4.0",
+  "description": "MCP bridge for the Bambu Lab CyberBrick desktop app via Chrome DevTools Protocol",
+  "mcpName": "io.github.jarvisluk/cyberbrick-mcp",
+  "license": "MIT",
+  "author": "Jarvis Luk",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jarvisluk/cyberbrick-mcp.git"
+  },
+  "homepage": "https://github.com/jarvisluk/cyberbrick-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/jarvisluk/cyberbrick-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "cyberbrick",
+    "bambu-lab",
+    "cdp"
+  ],
+  "type": "module",
+  "main": "src/server.js",
+  "exports": {
+    ".": "./src/server.js",
+    "./core": "./src/core/index.js"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test",
+    "smoke": "node scripts/smoke.js"
+  },
+  "bin": {
+    "cyberbrick": "src/server.js"
+  },
+  "files": [
+    "src",
+    "docs",
+    "README.zh-CN.md",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "chrome-remote-interface": "^0.33.2",
+    "zod": "^4.6.7"
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "en": {
+    "version": "0.6.2",
+    "config_type": "custom",
+    "design_id": "00000000000000000000",
+    "region": "xx",
+    "switches": {
+      "list": [
+        {
+          "state": "off"
+        },
+        {
+          "state": "off"
+        }
+      ]
+    },
+    "sender": {
+      "channels": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ]
+    },
+    "receiver_1": {
+      "PWM1": {},
+      "PWM2": {},
+      "PWM3": {},
+      "PWM4": {},
+      "LED1": {},
+      "LED2": {},
+      "MOTOR1": {},
+      "MOTOR2": {},
+      "BUZZER1": {},
+      "BUZZER2": {},
+      "CODE": {}
+    },
+    "receiver_2": {
+      "PWM1": {},
+      "PWM2": {},
+      "PWM3": {},
+      "PWM4": {},
+      "LED1": {},
+      "LED2": {},
+      "MOTOR1": {},
+      "MOTOR2": {},
+      "BUZZER1": {},
+      "BUZZER2": {},
+      "CODE": {}
+    }
+  },
+  "cn": {
+    "version": "0.6.2",
+    "config_type": "custom",
+    "design_id": "00000000000000000000",
+    "region": "xx",
+    "switches": {
+      "list": [
+        {
+          "state": "off"
+        },
+        {
+          "state": "off"
+        }
+      ]
+    },
+    "sender": {
+      "channels": [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ]
+    },
+    "receiver_1": {
+      "PWM1": {},
+      "PWM2": {},
+      "PWM3": {},
+      "PWM4": {},
+      "LED1": {},
+      "LED2": {},
+      "MOTOR1": {},
+      "MOTOR2": {},
+      "BUZZER1": {},
+      "BUZZER2": {},
+      "CODE": {}
+    },
+    "receiver_2": {
+      "PWM1": {},
+      "PWM2": {},
+      "PWM3": {},
+      "PWM4": {},
+      "LED1": {},
+      "LED2": {},
+      "MOTOR1": {},
+      "MOTOR2": {},
+      "BUZZER1": {},
+      "BUZZER2": {},
+      "CODE": {}
+    }
+  }
+}

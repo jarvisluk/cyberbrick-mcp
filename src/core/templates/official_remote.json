@@ -1,0 +1,377 @@
+{
+  "en": {
+    "version": "1.6.22",
+    "config_type": "custom",
+    "sender": {
+      "channels": [
+        {
+          "name": "L Shoulder 3-Pos",
+          "device": "three_way_switch",
+          "data": {
+            "deadzone": 500,
+            "mid_value": 2200
+          },
+          "controls": [],
+          "event": []
+        },
+        {
+          "name": "L Stick",
+          "device": "joystick",
+          "data": {
+            "channel": "x",
+            "deadzone": 300,
+            "mid_value": 2048
+          },
+          "controls": [],
+          "event": []
+        },
+        {
+          "data": {
+            "deadzone": 200,
+            "mid_value": 2048,
+            "channel": "y"
+          },
+          "name": "L Stick",
+          "device": "joystick",
+          "controls": [
+            {
+              "actuator": "MOTOR1",
+              "direction": "positive",
+              "receiver": 1
+            },
+            {
+              "actuator": "MOTOR2",
+              "direction": "negative",
+              "receiver": 1
+            }
+          ],
+          "event": []
+        },
+        {
+          "name": "R Shoulder Stick",
+          "device": "joystick_s",
+          "data": {
+            "channel": "y",
+            "deadzone": 200,
+            "mid_value": 2048
+          },
+          "controls": [
+            {
+              "actuator": "PWM1",
+              "direction": "negative",
+              "receiver": 1
+            }
+          ],
+          "event": [
+            {
+              "type": "gt_mid",
+              "actuator": "LED2",
+              "set_value": [
+                4
+              ],
+              "receiver": 1
+            },
+            {
+              "type": "lt_mid",
+              "actuator": "LED2",
+              "set_value": [
+                2
+              ],
+              "receiver": 1
+            },
+            {
+              "type": "eq_mid",
+              "actuator": "LED2",
+              "set_value": [
+                5
+              ],
+              "receiver": 1
+            }
+          ]
+        },
+        {
+          "name": "R Stick",
+          "device": "joystick",
+          "data": {
+            "channel": "x",
+            "deadzone": 200,
+            "mid_value": 2048
+          },
+          "controls": [
+            {
+              "actuator": "MOTOR1",
+              "direction": "negative",
+              "receiver": 1
+            },
+            {
+              "actuator": "MOTOR2",
+              "direction": "negative",
+              "receiver": 1
+            }
+          ],
+          "event": []
+        },
+        {
+          "data": {
+            "deadzone": 200,
+            "mid_value": 2048,
+            "channel": "y"
+          },
+          "name": "R Stick",
+          "device": "joystick",
+          "controls": [],
+          "event": []
+        },
+        {
+          "name": "L Shoulder Button",
+          "device": "button",
+          "data": {},
+          "controls": [],
+          "event": [
+            {
+              "type": "short",
+              "actuator": "LED2",
+              "set_value": [
+                3,
+                5
+              ],
+              "receiver": 1,
+              "channelId": 6
+            }
+          ]
+        },
+        {},
+        {},
+        {}
+      ]
+    },
+    "receiver_1": {
+      "PWM1": {},
+      "PWM2": {},
+      "PWM3": {},
+      "PWM4": {},
+      "LED1": {},
+      "LED2": {},
+      "MOTOR1": {},
+      "MOTOR2": {},
+      "BUZZER1": {},
+      "BUZZER2": {},
+      "CODE": {}
+    },
+    "receiver_2": {
+      "BUZZER1": {},
+      "BUZZER2": {},
+      "PWM1": {},
+      "PWM2": {},
+      "PWM3": {},
+      "PWM4": {},
+      "LED1": {},
+      "LED2": {},
+      "MOTOR1": {},
+      "MOTOR2": {},
+      "CODE": {}
+    },
+    "switches": {
+      "list": [
+        {
+          "state": "off"
+        },
+        {
+          "state": "off"
+        }
+      ],
+      "en": false
+    },
+    "update_time": "2025/4/28 21:35:21",
+    "config_name": "Remote",
+    "design_id": "00000000000000000000",
+    "region": "xx"
+  },
+  "cn": {
+    "version": "1.6.22",
+    "config_type": "custom",
+    "sender": {
+      "channels": [
+        {
+          "name": "左肩三档开关",
+          "device": "three_way_switch",
+          "data": {
+            "deadzone": 500,
+            "mid_value": 2200
+          },
+          "controls": [],
+          "event": []
+        },
+        {
+          "name": "左摇杆",
+          "device": "joystick",
+          "data": {
+            "channel": "x",
+            "deadzone": 300,
+            "mid_value": 2048
+          },
+          "controls": [],
+          "event": []
+        },
+        {
+          "name": "左摇杆",
+          "device": "joystick",
+          "data": {
+            "deadzone": 200,
+            "mid_value": 2048,
+            "channel": "y"
+          },
+          "controls": [
+            {
+              "actuator": "MOTOR1",
+              "direction": "positive",
+              "receiver": 1
+            },
+            {
+              "actuator": "MOTOR2",
+              "direction": "negative",
+              "receiver": 1
+            }
+          ],
+          "event": []
+        },
+        {
+          "name": "右肩摇杆",
+          "device": "joystick_s",
+          "data": {
+            "channel": "y",
+            "deadzone": 200,
+            "mid_value": 2048
+          },
+          "controls": [
+            {
+              "actuator": "PWM1",
+              "direction": "negative",
+              "receiver": 1
+            }
+          ],
+          "event": [
+            {
+              "type": "gt_mid",
+              "actuator": "LED2",
+              "set_value": [
+                4
+              ],
+              "receiver": 1
+            },
+            {
+              "type": "lt_mid",
+              "actuator": "LED2",
+              "set_value": [
+                2
+              ],
+              "receiver": 1
+            },
+            {
+              "type": "eq_mid",
+              "actuator": "LED2",
+              "set_value": [
+                5
+              ],
+              "receiver": 1
+            }
+          ]
+        },
+        {
+          "name": "右摇杆",
+          "device": "joystick",
+          "data": {
+            "channel": "x",
+            "deadzone": 200,
+            "mid_value": 2048
+          },
+          "controls": [
+            {
+              "actuator": "MOTOR1",
+              "direction": "negative",
+              "receiver": 1
+            },
+            {
+              "actuator": "MOTOR2",
+              "direction": "negative",
+              "receiver": 1
+            }
+          ],
+          "event": []
+        },
+        {
+          "name": "右摇杆",
+          "device": "joystick",
+          "data": {
+            "deadzone": 200,
+            "mid_value": 2048,
+            "channel": "y"
+          },
+          "controls": [],
+          "event": []
+        },
+        {
+          "name": "左肩按键",
+          "device": "button",
+          "data": {},
+          "controls": [],
+          "event": [
+            {
+              "type": "short",
+              "actuator": "LED2",
+              "set_value": [
+                3,
+                5
+              ],
+              "receiver": 1
+            }
+          ]
+        },
+        {},
+        {},
+        {}
+      ]
+    },
+    "receiver_1": {
+      "PWM1": {},
+      "PWM2": {},
+      "PWM3": {},
+      "PWM4": {},
+      "LED1": {},
+      "LED2": {},
+      "MOTOR1": {},
+      "MOTOR2": {},
+      "BUZZER1": {},
+      "BUZZER2": {},
+      "CODE": {}
+    },
+    "receiver_2": {
+      "BUZZER1": {},
+      "BUZZER2": {},
+      "PWM1": {},
+      "PWM2": {},
+      "PWM3": {},
+      "PWM4": {},
+      "LED1": {},
+      "LED2": {},
+      "MOTOR1": {},
+      "MOTOR2": {},
+      "CODE": {}
+    },
+    "switches": {
+      "list": [
+        {
+          "state": "off"
+        },
+        {
+          "state": "off"
+        }
+      ],
+      "en": false
+    },
+    "update_time": "2025/4/28 21:43:28",
+    "config_name": "Remote",
+    "design_id": "00000000000000000000",
+    "region": "xx"
+  }
+}

@@ -1,0 +1,11 @@
+node_modules/
+.claude/settings.local.json
+.DS_Store
+*.log
+captures/
+
+# debug scratch scripts
+scripts/.*
+
+# local MCP servers (machine-specific paths)
+.mcp.json
