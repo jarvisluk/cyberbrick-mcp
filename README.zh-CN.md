@@ -6,12 +6,7 @@ MCP 桥接 Bambu Lab CyberBrick 桌面应用（Electron），通过 Chrome DevTo
 
 覆盖硬件连接规划 → 固件编写 → 烧录的完整流程。
 
-## 状态
-
-- 接口文档：[`docs/MCP接口文档.md`](docs/MCP接口文档.md)（工具契约、参数与响应、错误语义、协议约束）。
-- 架构选型、App 内部入口、协议要点、踩坑与升级检查清单：[`docs/设计与踩坑笔记.md`](docs/设计与踩坑笔记.md)。
-
-### 工具清单（41 个）
+## 工具清单（41 个）
 
 > 本 server 是 CyberBrick 应用的**纯透传层**：每个工具直接调用应用自身的 API（store action / 设备方法），调用即执行。例外：`flash_mpy`、`flash_firmware` 和带 `hardwareMappings` 的 `flash_config`（会先升级固件）必须传 `confirm: true`（用户明确同意后才设）；设备类写操作的 `target` 必须唯一匹配一台设备，否则拒绝执行。
 
@@ -31,7 +26,7 @@ MCP 桥接 Bambu Lab CyberBrick 桌面应用（Electron），通过 Chrome DevTo
 - 项目管理：`project_create`（6 种内置模板）、`project_import`、`project_rename`、`project_delete`（`destructiveHint: true`）、`project_load`、`project_save`、`project_open_editor`
 - 窗口：`window_list`（只读）、`window_close`、`window_close_others`
 
-### 验证脚本
+## 验证脚本
 - 单元测试（不需要 App / 真机）：`npm test`
 - 发布版本校验：`node scripts/check_release.mjs [vX.Y.Z]`
 - 只读链路：`node scripts/verify_readonly.mjs`

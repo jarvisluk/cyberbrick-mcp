@@ -36,7 +36,6 @@
   },
   "files": [
     "src",
-    "docs",
     "README.zh-CN.md",
     "CHANGELOG.md"
   ],

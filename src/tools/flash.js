@@ -80,7 +80,7 @@ export function registerFlashTools(server) {
   server.registerTool('flash_mpy',
     {
       title: 'MicroPython firmware update',
-      description: 'Run a MicroPython firmware update via the app\'s updateLoaderFirmwareMpy (START_MPY_UPDATE). Writes mpy.img and REBOOTS the board. DESTRUCTIVE — requires confirm=true after explicit user approval. Default path upgrades to the built-in RC MPY (mpyType=1); passing userMpyConfig targets a design MPY. Experimental: the built-in path still needs live validation (see docs/MPY固件链路笔记.md).',
+      description: 'Run a MicroPython firmware update via the app\'s updateLoaderFirmwareMpy (START_MPY_UPDATE). Writes mpy.img and REBOOTS the board. DESTRUCTIVE — requires confirm=true after explicit user approval. Default path upgrades to the built-in RC MPY (mpyType=1); passing userMpyConfig targets a design MPY. Experimental: the built-in path still needs live validation.',
       annotations: { ...WRITE_ANNOTATIONS, destructiveHint: true, openWorldHint: true },
       inputSchema: {
         ...targetSchema,

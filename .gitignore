@@ -9,3 +9,6 @@ scripts/.*
 
 # local MCP servers (machine-specific paths)
 .mcp.json
+
+# internal design / reverse-engineering notes (kept local)
+docs/

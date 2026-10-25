@@ -6,15 +6,7 @@ An MCP server that drives the Bambu Lab CyberBrick desktop app (Electron) over t
 
 It covers the entire device setup workflow: hardware connection planning → firmware authoring → flashing.
 
-## Status
-
-- Interface reference: [`docs/MCP接口文档.md`](docs/MCP接口文档.md) — tool contracts, parameters and responses, error semantics, protocol constraints.
-- Architecture, app internals, protocol notes, pitfalls and the upgrade checklist: [`docs/设计与踩坑笔记.md`](docs/设计与踩坑笔记.md).
-- MPY / system upgrade pipeline: [`docs/MPY固件链路笔记.md`](docs/MPY固件链路笔记.md).
-
-> The detailed docs under `docs/` are currently written in Chinese.
-
-### Tools (41)
+## Tools (41)
 
 > This server is a **thin pass-through layer** over the CyberBrick app: every tool calls the app's own API (store actions / device methods) and runs immediately. Exceptions: `flash_mpy`, `flash_firmware`, and `flash_config` with `hardwareMappings` (which upgrades firmware first) require `confirm: true`, set only after the user explicitly agrees. For device write operations, `target` must match exactly one device or the call is rejected.
 
@@ -34,7 +26,7 @@ It covers the entire device setup workflow: hardware connection planning → fir
 - Project management: `project_create` (6 built-in templates), `project_import`, `project_rename`, `project_delete` (`destructiveHint: true`), `project_load`, `project_save`, `project_open_editor`
 - Windows: `window_list` (read-only), `window_close`, `window_close_others`
 
-### Verification scripts
+## Verification scripts
 - Unit tests (no app or hardware needed): `npm test`
 - Release version check: `node scripts/check_release.mjs [vX.Y.Z]`
 - Read-only path: `node scripts/verify_readonly.mjs`

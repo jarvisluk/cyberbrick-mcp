@@ -90,7 +90,7 @@ export async function launchApp({ killExisting = false, timeoutMs = ENDPOINT_TIM
       // App exited quickly — typically the sandbox-restriction trap.
       throw new Error(
         'CyberBrick exited immediately after launch. If this session runs with a file '
-        + 'sandbox, start the app from an unsandboxed shell (see docs/设计与踩坑笔记.md §6).'
+        + 'sandbox, start the app from an unsandboxed shell.'
       );
     }
     await new Promise(r => setTimeout(r, ENDPOINT_POLL_MS));
